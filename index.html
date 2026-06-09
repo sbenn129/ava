@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 
-<html lang="en" data-theme="light"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en" data-theme="dark">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" viewport-fit=cover">
   <title>Hair Artistry by Ava | HAIRARTISTRYBYAVA.COM</title>
-
+  <link rel="icon" type="image/jpg" href="ava.jpg"> 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
@@ -13,8 +14,8 @@
   <style>
 
     /* ============================================================
-   GRADIENT PRESETS — BACKGROUND
-   To switch gradients, copy ONE value into the background
+   GRADIENT PRESETS — HTML
+   To switch gradients, copy ONE value into the HTML
    property in the body rule below.
    ============================================================
 
@@ -44,7 +45,6 @@
    background: linear-gradient(135deg, #232526, #414345);
 
    ============================================================ */
-
     
 /* ============================================================
    THEME PRESETS — ACCENT & GLOW
@@ -134,26 +134,87 @@
       margin: 0;
       padding: 0;
     }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-    
-     background-color: var(--bg);
-  
-   min-height: 100vh;
-  background: linear-gradient(135deg, #005c97, #363795);
+  html {
+        height: auto;
+        background-image: linear-gradient(135deg, #005c97, #363795);
+        background-color: #000000;
+     }
+ body {
+  font-family: 'DM Sans', sans-serif;
+  height: auto;
   background-attachment: fixed;
-    
-      
-      color: var(--text-primary);
-      min-height: 100vh;
+  background-size: cover;
+  
+  color: var(--text-primary);
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-height: 100vh;
       padding: 40px 20px 0;
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
+.avatar { cursor: pointer; }
+
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  animation: lb-fade-in 0.2s ease;
+}
+
+.lightbox-overlay.active { display: flex; }
+
+.lightbox-img-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.lightbox-img {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 0 6px var(--accent-glow), 0 20px 60px rgba(0,0,0,0.6);
+  animation: lb-zoom-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+  transition: background 0.2s;
+}
+
+.lightbox-close:hover { background: #fff; }
+
+@keyframes lb-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes lb-zoom-in {
+  from { transform: scale(0.7); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+    
     /* ---- Dark/Light Mode Toggle ---- */
     .toggle-wrap {
       position: absolute;
@@ -241,7 +302,7 @@
       font-size: 14px;
       color: var(--text-muted);
       text-align: center;
-      max-width: 320px;
+      max-width: 380px;
       line-height: 1.5;
     }
 
@@ -483,7 +544,7 @@
     }
 
     /* ---- Footer ---- */
-       footer {
+    footer {
   margin-top: auto;
   padding: 24px 20px;
   text-align: center;
@@ -507,19 +568,26 @@ footer a:hover { color: rgba(255, 255, 255, 0.9); }
 
 <body>
 
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-img-wrap">
+    <img class="lightbox-img" src="knickolascage.jpg" alt="Knickolas Cage" />
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+  </div>
+</div>
+
   <div class="card">
 
 <div class="toggle-wrap">
   <button class="toggle-btn" onclick="toggleTheme()" aria-label="Toggle theme">
-    <span id="theme-icon">☀️</span>
+    <span id="theme-icon">🌙</span>
   </button>
 </div>
 
-<div class="avatar">
+<div class="avatar" onclick="openLightbox()">
   <span class="avatar-placeholder"> </span>
 </div>
 
-<h1 class="profile-name">Hair Artistry by Ava</h1>
+<h1 class="profile-name">Ava Carvis</h1>
 <p class="profile-tagline">Let's connect! Check out my links below.</p>
 
 <div class="divider"></div>
@@ -586,7 +654,7 @@ footer a:hover { color: rgba(255, 255, 255, 0.9); }
   </div>
 
   <footer>
-    <p><a href="http://hairartistrybyava.com">HAIRARTISTRYBYAVA.COM</a></p>
+    <p><a href="https://hairartistrybyava.com/">HAIRARTISTRYBYAVA.COM</a></p>
   </footer>
 
   <script>
@@ -669,6 +737,20 @@ footer a:hover { color: rgba(255, 255, 255, 0.9); }
         btn.disabled = false;
       }
     }
+    function openLightbox() {
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(e) {
+  if (e.target.closest && e.target.closest('.lightbox-img-wrap') && !e.target.closest('.lightbox-close')) return;
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox({ target: document.body });
+});
   </script>
 
 </body></html>
